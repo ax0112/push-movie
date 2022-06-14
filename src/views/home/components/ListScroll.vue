@@ -4,7 +4,7 @@
   <div class="wrapper-box" ref="wrapper">
     <div ref="wrapperChild" class="long-box">
       <div class="item" v-for="item of swiper" :key="item.id">
-        <div class="item-img">
+        <div class="item-img" @click="Fposition">
         <img class="item-img-content" :src="item.imgUrl" alt="">
         </div>
           <div class="desc1">{{item.desc1}}</div>
@@ -19,6 +19,12 @@
 import BScroll from 'better-scroll'
 export default {
   name: 'HomeListScroll',
+  props: {
+    position: {
+      type: Function,
+      default: null
+    }
+  },
   data () {
     return {
       swiper: [
@@ -99,6 +105,9 @@ export default {
         this._calculateWidth() // 计算宽度
         this._initScroll()
       })
+    },
+    Fposition () {
+      this.position('list2')
     }
   }
 }

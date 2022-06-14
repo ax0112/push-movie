@@ -1,10 +1,10 @@
 <template>
   <div>
-    <home-list-scroll></home-list-scroll>
+    <home-list-scroll :position="position"></home-list-scroll>
     <div class="nav">
-      <div id="div1" class="active" @click="getItemByNav('list1')">div1</div>
-      <div id="div2" @click="getItemByNav('list2')">div2</div>
-      <div id="div3" @click="getItemByNav('list3')">div3</div>
+      <div id="div1" class="active" @click="position('list1')">div1</div>
+      <div id="div2" @click="position('list2')">div2</div>
+      <div id="div3" @click="position('list3')">div3</div>
     </div>
     <home-info></home-info>
     <div id="list1" class="list1" ref="scroll1"></div>
@@ -23,7 +23,7 @@ export default {
     window.addEventListener('scroll', this.handleScrollx, true)
   },
   methods: {
-    getItemByNav (key) {
+    position (key) {
       console.log(key)
       const PageId = document.querySelector('#' + key)
       const Position = PageId.offsetTop - 50
