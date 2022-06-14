@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="list-scroll">
   <div class="title">这是一个横向移动的盒子</div>
   <div class="wrapper-box" ref="wrapper">
     <div ref="wrapperChild" class="long-box">
@@ -18,7 +18,7 @@
 <script>
 import BScroll from 'better-scroll'
 export default {
-  name: 'HomeScroll',
+  name: 'HomeListScroll',
   data () {
     return {
       swiper: [
@@ -105,6 +105,9 @@ export default {
 </script>
 
 <style scoped>
+.list-scroll{
+  margin: 0.2rem 0;
+}
 .title{
   font-size: .24rem;
 }
