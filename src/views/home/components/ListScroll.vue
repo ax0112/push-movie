@@ -1,14 +1,28 @@
 <template>
 <div class="list-scroll">
-  <div class="title">这是一个横向移动的盒子</div>
+  <div class="title">{{ title }}</div>
   <div class="wrapper-box" ref="wrapper">
     <div ref="wrapperChild" class="long-box">
-      <div class="item" v-for="item of swiper" :key="item.id">
-        <div class="item-img" @click="Fposition">
-        <img class="item-img-content" :src="item.imgUrl" alt="">
+      <div
+        class="item"
+        v-for="item of swiper"
+        :key="item.id"
+        :style="[{'width':width+'px'}]"
+      >
+        <div
+          class="item-img"
+          :style="[{'height':height+'px'}]">
+          <img
+            class="item-img-content"
+            :src="item.imgUrl" alt=""
+          >
+          <span class="item-img-text">{{item.played}}</span>
         </div>
-          <div class="desc1">{{item.desc1}}</div>
-          <div class="desc2">{{ item.desc2}}</div>
+        <div class="item-text">
+          <div class="desc">{{item.desc1}}</div>
+          <div class="desc">{{ item.desc2}}</div>
+          <v-clamp :autoresize="autoresize" :max-lines="2" class="desc">{{item.desc3}}</v-clamp>
+        </div>
       </div>
     </div>
   </div>
@@ -17,48 +31,33 @@
 
 <script>
 import BScroll from 'better-scroll'
+import VClamp from 'vue-clamp'
 export default {
   name: 'HomeListScroll',
+  components: {
+    VClamp
+  },
   props: {
-    position: {
-      type: Function,
-      default: null
-    }
+    title: String,
+    swiper: {
+      type: Array,
+      default () {
+        return [{
+          id: String,
+          imgUrl: String,
+          desc1: String,
+          desc2: String,
+          desc3: String,
+          played: String
+        }]
+      }
+    },
+    height: String,
+    width: String
   },
   data () {
     return {
-      swiper: [
-        {
-          id: '01',
-          imgUrl: require('../../../assets/image/IMG_2215.png'),
-          desc1: '这是评论',
-          desc2: '评论'
-        },
-        {
-          id: '02',
-          imgUrl: require('../../../assets/image/IMG_2215.png'),
-          desc1: '这是评论',
-          desc2: '评论'
-        },
-        {
-          id: '03',
-          imgUrl: require('../../../assets/image/IMG_2215.png'),
-          desc1: '这是评论',
-          desc2: '评论'
-        },
-        {
-          id: '04',
-          imgUrl: require('../../../assets/image/IMG_2215.png'),
-          desc1: '这是评论',
-          desc2: '评论'
-        },
-        {
-          id: '05',
-          imgUrl: require('../../../assets/image/IMG_2215.png'),
-          desc1: '这是评论',
-          desc2: '评论'
-        }
-      ]
+      autoresize: true
     }
   },
   mounted () {
@@ -88,8 +87,6 @@ export default {
       )
       // 设置一个起始宽度
       let initWidth = 0
-      let initHeight = 0
-      initHeight = rampageList[0].clientHeight
       // 遍历标签
       for (let i = 0; i < rampageList.length; i++) {
         const item = rampageList[i]
@@ -98,16 +95,12 @@ export default {
       }
       // 设置可滚动的宽度
       this.$refs.wrapperChild.style.width = `${initWidth}px`
-      this.$refs.wrapperChild.style.height = `${initHeight}px`
     },
     slide_x () {
       this.$nextTick(() => { // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染完毕
         this._calculateWidth() // 计算宽度
         this._initScroll()
       })
-    },
-    Fposition () {
-      this.position('list2')
     }
   }
 }
@@ -118,7 +111,7 @@ export default {
   margin: 0.2rem 0;
 }
 .title{
-  font-size: .24rem;
+  font-size: .22rem;
 }
 .wrapper-box{
   overflow: hidden;
@@ -130,10 +123,10 @@ export default {
 .item{
   float: left;
   width: 1.2rem;
-  height: 1.52rem;
   padding: 0 .05rem;
 }
 .item-img{
+  position: relative;
   width: 100%;
   height: 1rem;
   overflow: hidden;
@@ -141,12 +134,25 @@ export default {
 .item-img-content{
   width: 100%;
 }
-.desc1{
-  line-height: .26rem;
+.item-img-text{
+  position: absolute;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.01rem;
+  font-size: .12rem;
+  color: #fff;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+}
+.item-text{
+  height: .5rem;
+  padding: .1rem 0;
+}
+.desc{
+  line-height: .18rem;
   font-size: .16rem;
+  color: #777777;
 }
-.desc2{
-  line-height: .13rem;
-  font-size: .08rem;
-}
+
 </style>

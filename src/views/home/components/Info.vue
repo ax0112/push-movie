@@ -1,10 +1,15 @@
 <template>
   <div class="info">
-    <div class="title">测试截断</div>
-    <v-clamp autocapitalize ellipis="'...'" :max-lines="3" :expanded="expanded" class="item">
-      这是测试这是测试这是这是测试这是测试这是测试这是测试这是测试这是测试这是测试这是测试测试这是测试这是测试这是测试这是测试这是测试这是测试
+    <div class="title">{{ this.title }}</div>
+    <v-clamp
+      ellipis="'...'"
+      :max-lines="3"
+      :expanded="expanded"
+      class="item"
+    >
+      {{this.content}}
     </v-clamp>
-    <button @click="toggle()">{{ expanded?'收起':'展开' }}</button>
+    <button class="ex-btn" @click="toggle()">{{ expanded?'收起':'展开' }}</button>
   </div>
 </template>
 
@@ -20,6 +25,10 @@ export default {
       expanded: false
     }
   },
+  props: {
+    title: String,
+    content: String
+  },
   methods: {
     toggle () {
       this.expanded = !this.expanded
@@ -33,7 +42,22 @@ export default {
   width: 100%;
   margin: 0.2rem 0;
 }
+.title{
+ font-size: .22rem;
+}
 .item{
-  padding: .2rem .1rem;
+  margin: .2rem .1rem 0 .1rem;
+  font-size: .16rem;
+  color: #777;
+  line-height: .22rem;
+}
+.ex-btn{
+  width: .75rem;
+  height: .20rem;
+  line-height: .20rem;
+  border-radius: 0.2rem;
+  background: #25a4bb;
+  color: #fff;
+  font-size: .16rem;
 }
 </style>
